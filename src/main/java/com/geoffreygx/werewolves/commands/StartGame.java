@@ -28,10 +28,14 @@ public class StartGame implements CommandExecutor {
         }
 
         int werewolvesCount = Integer.parseInt(args[0]);
+        int witchCount = Integer.parseInt(args[1]);
+        int seerCount = Integer.parseInt(args[2]);
+        int cupidCount = Integer.parseInt(args[3]);
+
         UUID uuid = UUID.randomUUID();
 
         List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-        Game game = new Game(uuid, werewolvesCount);
+        Game game = new Game(uuid, werewolvesCount, witchCount, seerCount, cupidCount);
         game.assignRoles(onlinePlayers);
 
         Plugin.addGame(game);

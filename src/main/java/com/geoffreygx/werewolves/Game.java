@@ -1,27 +1,34 @@
 package com.geoffreygx.werewolves;
 
-import com.geoffreygx.werewolves.roles.Role;
-import com.geoffreygx.werewolves.roles.VillagerRole;
-import com.geoffreygx.werewolves.roles.WerewolfRole;
+import com.geoffreygx.werewolves.roles.*;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 
 public class Game {
     private final int werewolvesCount;
+    private final int witchCount;
+    private final int seerCount;
+    private final int cupidCount;
     private final UUID gameUUID;
     private final String shortenedUUID;
     private final List<Role> roles;
 
-    public Game(UUID gameUUID, int werewolvesCount) {
+    public Game(UUID gameUUID, int werewolvesCount, int witchCount, int seerCount, int cupidCount) {
         this.werewolvesCount = werewolvesCount;
         this.gameUUID = gameUUID;
+        this.witchCount = witchCount;
+        this.seerCount = seerCount;
+        this.cupidCount = cupidCount;
 
         this.shortenedUUID = gameUUID.toString().replace("-", "").substring(0, 7);
 
         WerewolfRole werewolfRole = new WerewolfRole(werewolvesCount);
-        VillagerRole villagerRole = new VillagerRole(12 - werewolvesCount);
-        this.roles = new ArrayList<>(Arrays.asList(werewolfRole, villagerRole));
+        WitchRole witchRole = new WitchRole(witchCount);
+        SeerRole seerRole = new SeerRole(seerCount);
+        CupidRole cupidRole = new CupidRole(cupidCount);
+        VillagerRole villagerRole = new VillagerRole(12 - werewolvesCount - witchCount - seerCount - cupidCount);
+        this.roles = new ArrayList<>(Arrays.asList(werewolfRole, witchRole, seerRole, cupidRole, villagerRole));
     }
 
     public void assignRoles(List<Player> onlinePlayers) {
