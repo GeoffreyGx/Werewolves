@@ -18,12 +18,16 @@ public class RolesList implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "Usage: /roleslist <gameUUID>");
             return false;
         }
-        UUID gameUUID = UUID.fromString(args[0]);
+
+        String shortenedUUID = args[0];
+        UUID gameUUID = Plugin.resolveUUID(shortenedUUID);
+
         try {
             Plugin.getGameFromUUID(gameUUID);
         } catch (Exception e) {
             sender.sendMessage(ChatColor.RED + "Could not find game or UUID is not valid");
         }
+
         Game game = Plugin.getGameFromUUID(gameUUID);
 
         HashMap<Role, Player> playingPlayers = game.showRoles();

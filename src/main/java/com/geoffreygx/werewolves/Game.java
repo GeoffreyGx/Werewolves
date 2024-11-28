@@ -10,11 +10,14 @@ import java.util.*;
 public class Game {
     private final int werewolvesCount;
     private final UUID gameUUID;
+    private final String shortenedUUID;
     private final List<Role> roles;
 
     public Game(UUID gameUUID, int werewolvesCount) {
         this.werewolvesCount = werewolvesCount;
         this.gameUUID = gameUUID;
+
+        this.shortenedUUID = gameUUID.toString().replace("-", "").substring(0, 7);
 
         WerewolfRole werewolfRole = new WerewolfRole(werewolvesCount);
         VillagerRole villagerRole = new VillagerRole(12 - werewolvesCount);

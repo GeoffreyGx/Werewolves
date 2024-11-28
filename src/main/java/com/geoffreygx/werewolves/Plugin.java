@@ -5,12 +5,11 @@ import com.geoffreygx.werewolves.commands.RolesList;
 import com.geoffreygx.werewolves.commands.StartGame;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Plugin extends JavaPlugin {
     private static List<Game> games = new ArrayList<Game>();
+    private static Map<String, UUID> shortenedUUIDMap = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -30,7 +29,13 @@ public class Plugin extends JavaPlugin {
     }
 
     public static void addGame(Game game) {
+        String shortenedUUID = game.getGameUUID().toString().substring(0, 7);
+        shortenedUUIDMap.put(shortenedUUID, game.getGameUUID());
         games.add(game);
+    }
+
+    public static UUID resolveUUID(String shortenedUUID) {
+        return shortenedUUIDMap.get(shortenedUUID);
     }
 
     public static Game getGameFromUUID(UUID uuid) {
