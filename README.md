@@ -1,4 +1,4 @@
-/!\ This plugin is being rewritten
+/!\ This is an old version **DO NOT USE**
 
 # Werewolves
 Werewolves is a spigot plugin aiming to simulate the game **The Werewolves of Millers Hollow** (in french *Les Loups-garous de Thiercelieux*) in Minecraft.
