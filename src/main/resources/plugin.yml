@@ -3,16 +3,3 @@ version: 0.1
 main: com.geoffreygx.werewolves.Plugin
 api-version: 1.21
 
-commands:
-  startgame:
-    description: Starts a new game.
-    usage: /startgame
-    permission: werewolves.game_management
-  gameslist:
-    description: Lists all active games.
-    usage: /gameslist
-    permission: werewolves.lists
-  roleslist:
-    description: Shows the roles of players in a specific game.
-    usage: /roleslist <gameUUID>
-    permission: werewolves.lists
