@@ -3,6 +3,8 @@ package com.geoffreygx.werewolves;
 import com.geoffreygx.werewolves.commands.GamesList;
 import com.geoffreygx.werewolves.commands.RolesList;
 import com.geoffreygx.werewolves.commands.StartGame;
+import com.geoffreygx.werewolves.roles.Role;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
@@ -41,6 +43,15 @@ public class Plugin extends JavaPlugin {
     public static Game getGameFromUUID(UUID uuid) {
         for (Game game : games) {
             if (game.getGameUUID().equals(uuid)) {
+                return game;
+            }
+        }
+        return null;
+    }
+
+    public static Game getGameFromPlayer(Player player) {
+        for (Game game : games) {
+            if (game.getPlayerRole(player) != null) {
                 return game;
             }
         }

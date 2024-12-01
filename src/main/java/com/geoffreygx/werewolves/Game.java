@@ -12,9 +12,10 @@ public class Game {
     private final int cupidCount;
     private final UUID gameUUID;
     private final String shortenedUUID;
+    private final List<Player> players;
     private final List<Role> roles;
 
-    public Game(UUID gameUUID, int werewolvesCount, int witchCount, int seerCount, int cupidCount) {
+    public Game(UUID gameUUID, int werewolvesCount, int witchCount, int seerCount, int cupidCount, List<Player> players) {
         this.werewolvesCount = werewolvesCount;
         this.gameUUID = gameUUID;
         this.witchCount = witchCount;
@@ -22,6 +23,8 @@ public class Game {
         this.cupidCount = cupidCount;
 
         this.shortenedUUID = gameUUID.toString().replace("-", "").substring(0, 7);
+
+        this.players = players;
 
         WerewolfRole werewolfRole = new WerewolfRole(werewolvesCount);
         WitchRole witchRole = new WitchRole(witchCount);
@@ -31,25 +34,34 @@ public class Game {
         this.roles = new ArrayList<>(Arrays.asList(werewolfRole, witchRole, seerRole, cupidRole, villagerRole));
     }
 
-    public void assignRoles(List<Player> onlinePlayers) {
-        if (onlinePlayers.isEmpty()) {
+    public void assignRoles(List<Player> players) {
+        if (players.isEmpty()) {
             throw new IllegalArgumentException("No online players available");
         }
 
-        Collections.shuffle(onlinePlayers);
-        List<Player> playersToAssign = new ArrayList<>(onlinePlayers);
+        Collections.shuffle(players);
+        List<Player> playersToAssign = new ArrayList<>(players);
 
         for (Role role : roles) {
             for (Player player : playersToAssign) {
                 if (!(role.getMaxPlayers() == role.getPlayerCount())) {
                     role.addPlayer(player);
-                    onlinePlayers.remove(player);
+                    players.remove(player);
                 } else {
                     break;
                 }
             }
-            playersToAssign = new ArrayList<>(onlinePlayers);
+            playersToAssign = new ArrayList<>(players);
         }
+    }
+
+    public Role getPlayerRole(Player player) {
+        for (Role role : roles) {
+            if (role.getPlayers().contains(player)) {
+                return role;
+            }
+        }
+        return null;
     }
 
     public HashMap showRoles() {
@@ -68,5 +80,9 @@ public class Game {
 
     public UUID getGameUUID() {
         return gameUUID;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

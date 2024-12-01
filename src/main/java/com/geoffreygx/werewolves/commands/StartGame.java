@@ -2,6 +2,7 @@ package com.geoffreygx.werewolves.commands;
 
 import com.geoffreygx.werewolves.Game;
 import com.geoffreygx.werewolves.Plugin;
+import com.geoffreygx.werewolves.items.ActionWand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -35,10 +36,14 @@ public class StartGame implements CommandExecutor {
         UUID uuid = UUID.randomUUID();
 
         List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-        Game game = new Game(uuid, werewolvesCount, witchCount, seerCount, cupidCount);
-        game.assignRoles(onlinePlayers);
+        Game game = new Game(uuid, werewolvesCount, witchCount, seerCount, cupidCount, onlinePlayers);
+        game.assignRoles(game.getPlayers());
 
         Plugin.addGame(game);
+
+        for (Player player : game.getPlayers()) {
+            ActionWand.giveWand(player);
+        }
 
         return true;
     }
